@@ -1,2 +1,2 @@
 # daw2robot
-Digital Audio Workstation (DAW) to command a robot
+Using a Digital Audio Workstation (DAW) to command a robot
