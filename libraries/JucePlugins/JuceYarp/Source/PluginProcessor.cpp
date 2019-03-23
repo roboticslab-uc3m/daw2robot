@@ -17,7 +17,7 @@ JuceYarpAudioProcessor::JuceYarpAudioProcessor()
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::mono(), true)
+                       .withInput  ("Input",  AudioChannelSet::canonicalChannelSet(32), true)
                       #endif
                        .withOutput ("Output", AudioChannelSet::mono(), true)
                      #endif
@@ -104,7 +104,10 @@ void JuceYarpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     device.open(options);
     device.view(pos);
     device.view(mode);
-    mode->setControlMode(0,yarp::os::createVocab('p','o','s','d'));
+    int axes;
+    pos->getAxes(&axes);
+    std::vector<int> modePosd(axes,yarp::os::createVocab('p','o','s','d'));
+    mode->setControlModes(modePosd.data());
 }
 
 void JuceYarpAudioProcessor::releaseResources()
