@@ -42,9 +42,12 @@ def save_wav(file_name):
     compname = "not compressed"
     wav_file.setparams((nchannels, sampwidth, sample_rate, nframes, comptype, compname))
 
-    # Can also be done with numpy, e.g. np.arange(num_samples, dtype=np.int16), then tobytes()
     for sample in audio:
         wav_file.writeframes(struct.pack('h', int( sample * 32767.0 )))
+    # The next three lines provide an alternative vectorized version (also replace 'struct' above by 'numpy as np')
+    #np_audio = np.array(audio) * 32767.0
+    #np_audio = np_audio.astype(np.int16)
+    #wav_file.writeframes(np_audio.tobytes())
 
     wav_file.close()
 
