@@ -172,7 +172,7 @@ void JuceYarpAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
             float f = buffer.getSample(channel,sampleIdx);
             //if ((f>0.001)||(f<-0.001))
             //{
-            if (sampleIdx % 100 == 0)
+            if (sampleIdx == 0)
             {
                 pos->setPosition(channel, f*90.0);
             }
