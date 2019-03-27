@@ -34,3 +34,23 @@
 # WAV and Reaper files
 *.wav
 *.reapeaks
+
+# VIM
+*~
+*.swp
+*.orig
+*.pyc
+.Rhistory
+tags
+
+# CMake
+CMakeLists.txt.user
+**/build*/
+/.cproject
+/.project
+
+# Doxygen
+/doc/html/*
+
+# YCM
+/external/
