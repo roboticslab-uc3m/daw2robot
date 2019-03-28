@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class JuceYarpAudioProcessor  : public AudioProcessor
+class JuceYarpAudioProcessor  : public AudioProcessor, public Label::Listener
 {
 public:
     //==============================================================================
@@ -57,11 +57,23 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    void setRemoteName(String str)
+    {
+        printf("Set: %s.\n", str.toStdString().c_str());
+    }
+    void labelTextChanged (Label* labelThatHasChanged)
+    {
+        printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
+    }
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceYarpAudioProcessor)
     
     //==============================================================================
+    AudioProcessorValueTreeState parameters;
+
     yarp::os::Network yarp;
     yarp::dev::PolyDriver device;
     yarp::dev::IPositionDirect* pos;

@@ -13,14 +13,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 
-class RemoteLabelListener : public Label::Listener
-{
-    void labelTextChanged (Label* labelThatHasChanged)
-    {
-        printf("I have changed to: %s.\n", labelThatHasChanged->getText().getCharPointer());
-    }
-};
-
 //==============================================================================
 /**
 */
@@ -41,7 +33,6 @@ private:
 
     Label remoteInput { "Remote input", "/teoSim/rightArm"};
     Label remoteFixedText { "Remote title", "Remote"};
-    RemoteLabelListener remoteLabelListener;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceYarpAudioProcessorEditor)
 };

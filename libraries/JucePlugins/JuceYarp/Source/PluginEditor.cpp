@@ -18,6 +18,7 @@ JuceYarpAudioProcessorEditor::JuceYarpAudioProcessorEditor (JuceYarpAudioProcess
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+    p.setRemoteName(remoteInput.getText());
 }
 
 JuceYarpAudioProcessorEditor::~JuceYarpAudioProcessorEditor()
@@ -36,7 +37,7 @@ void JuceYarpAudioProcessorEditor::paint (Graphics& g)
     remoteFixedText.setJustificationType (Justification::right);
 
     addAndMakeVisible (remoteInput);
-    remoteInput.addListener(&remoteLabelListener);
+    remoteInput.addListener(&processor);
     remoteInput.setEditable (true);
     remoteInput.setColour (Label::backgroundColourId, Colours::darkblue);
 }

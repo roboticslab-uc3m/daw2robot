@@ -23,6 +23,9 @@ JuceYarpAudioProcessor::JuceYarpAudioProcessor()
                      #endif
                        )
 #endif
+                       , parameters (*this, nullptr, "state",
+                                    { std::make_unique<AudioParameterFloat> ("gain", "Gain", NormalisableRange<float> (0.0f, 1.0f), 0.9f),
+                                      std::make_unique<AudioParameterFloat> ("delay", "Delay Feedback", NormalisableRange<float> (0.0f, 1.0f), 0.5f) })
 {
 }
 
@@ -205,6 +208,10 @@ void JuceYarpAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName (parameters.state.getType()))
+            parameters.replaceState (ValueTree::fromXml (*xmlState));
 }
 
 //==============================================================================
