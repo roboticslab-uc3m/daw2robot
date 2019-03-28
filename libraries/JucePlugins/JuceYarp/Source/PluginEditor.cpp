@@ -30,10 +30,21 @@ void JuceYarpAudioProcessorEditor::paint (Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 
+    addAndMakeVisible (remoteFixedText);
+    remoteFixedText.attachToComponent (&remoteInput, true);
+    remoteFixedText.setColour (Label::textColourId, Colours::orange);
+    remoteFixedText.setJustificationType (Justification::right);
+
+    addAndMakeVisible (remoteInput);
+    remoteInput.addListener(&remoteLabelListener);
+    remoteInput.setEditable (true);
+    remoteInput.setColour (Label::backgroundColourId, Colours::darkblue);
 }
 
 void JuceYarpAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    remoteInput    .setBounds (100, 50, getWidth() - 110, 20);
 }
