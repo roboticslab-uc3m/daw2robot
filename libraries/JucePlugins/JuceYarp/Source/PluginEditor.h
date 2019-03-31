@@ -29,7 +29,10 @@ public:
 private:
     void labelTextChanged (Label* labelThatHasChanged)
     {
-        printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
+        if(&remoteInput == labelThatHasChanged)
+        {
+            printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
+        }
     }
 
     // This reference is provided as a quick way for your editor to
