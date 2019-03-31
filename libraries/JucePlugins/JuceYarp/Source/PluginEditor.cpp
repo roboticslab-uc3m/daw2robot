@@ -37,7 +37,7 @@ void JuceYarpAudioProcessorEditor::paint (Graphics& g)
     remoteFixedText.setJustificationType (Justification::right);
 
     addAndMakeVisible (remoteInput);
-    remoteInput.addListener(&processor);
+    remoteInput.addListener(this);
     remoteInput.setEditable (true);
     remoteInput.setColour (Label::backgroundColourId, Colours::darkblue);
 }

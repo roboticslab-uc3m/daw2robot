@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class JuceYarpAudioProcessorEditor  : public AudioProcessorEditor
+class JuceYarpAudioProcessorEditor  : public AudioProcessorEditor, public Label::Listener
 {
 public:
     JuceYarpAudioProcessorEditor (JuceYarpAudioProcessor&);
@@ -27,6 +27,11 @@ public:
     void resized() override;
 
 private:
+    void labelTextChanged (Label* labelThatHasChanged)
+    {
+        printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
+    }
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     JuceYarpAudioProcessor& processor;

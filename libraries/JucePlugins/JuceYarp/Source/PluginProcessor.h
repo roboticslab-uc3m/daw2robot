@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class JuceYarpAudioProcessor  : public AudioProcessor, public Label::Listener
+class JuceYarpAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
@@ -61,10 +61,6 @@ public:
     void setRemoteName(String str)
     {
         printf("Set: %s.\n", str.toStdString().c_str());
-    }
-    void labelTextChanged (Label* labelThatHasChanged)
-    {
-        printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
     }
 
 private:
