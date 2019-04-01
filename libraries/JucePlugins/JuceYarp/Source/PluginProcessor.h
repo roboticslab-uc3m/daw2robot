@@ -58,20 +58,19 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    void setRemoteName(String str)
-    {
-        printf("Set: %s.\n", str.toStdString().c_str());
-    }
+    void setRobotName(std::string value);
+    bool robotOpen();
+    void robotClose();
 
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceYarpAudioProcessor)
     
     //==============================================================================
-    AudioProcessorValueTreeState parameters;
-
     yarp::os::Network yarp;
     yarp::dev::PolyDriver device;
     yarp::dev::IPositionDirect* pos;
     yarp::dev::IControlMode* mode;
+    std::string robotName;
+    bool robotIsConnected;
 };

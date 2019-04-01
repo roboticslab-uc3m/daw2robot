@@ -27,13 +27,7 @@ public:
     void resized() override;
 
 private:
-    void labelTextChanged (Label* labelThatHasChanged)
-    {
-        if(&remoteInput == labelThatHasChanged)
-        {
-            printf("I have changed to: %s.\n", labelThatHasChanged->getText().toStdString().c_str());
-        }
-    }
+    void labelTextChanged (Label* labelThatHasChanged);
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
