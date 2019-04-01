@@ -232,7 +232,7 @@ bool JuceYarpAudioProcessor::robotOpen()
     }
     if (robotIsConnected)
     {
-        printf("Pass due to: device\n");
+        printf("Pass due to: robotIsConnected\n");
         return false;
     }
     yarp::os::Property options;
