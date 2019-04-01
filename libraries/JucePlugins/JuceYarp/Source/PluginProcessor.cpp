@@ -23,9 +23,7 @@ JuceYarpAudioProcessor::JuceYarpAudioProcessor()
                      #endif
                        )
 #endif
-                       , parameters (*this, nullptr, "state",
-                                    { std::make_unique<AudioParameterFloat> ("gain", "Gain", NormalisableRange<float> (0.0f, 1.0f), 0.9f),
-                                      std::make_unique<AudioParameterFloat> ("delay", "Delay Feedback", NormalisableRange<float> (0.0f, 1.0f), 0.5f) })
+                       , parameters (*this, nullptr)
 {
 }
 
