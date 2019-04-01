@@ -102,14 +102,15 @@ void JuceYarpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     printf("prepareToPlay(%s)\n",robotName.c_str());
-    //robotOpen();
+    robotOpen();
 }
 
 void JuceYarpAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
-    //robotClose();
+    printf("releaseResources()\n");
+    robotClose();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations

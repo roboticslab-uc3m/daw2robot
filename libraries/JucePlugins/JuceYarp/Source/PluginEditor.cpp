@@ -19,9 +19,9 @@ JuceYarpAudioProcessorEditor::JuceYarpAudioProcessorEditor (JuceYarpAudioProcess
     // editor's size to whatever you need it to be.
     setSize (400, 300);
     printf("JuceYarpAudioProcessorEditor::JuceYarpAudioProcessorEditor()\n");
-    processor.robotClose();
+    //processor.robotClose();
     processor.setRobotName(remoteInput.getText().toStdString());
-    processor.robotOpen();
+    //processor.robotOpen();
 }
 
 JuceYarpAudioProcessorEditor::~JuceYarpAudioProcessorEditor()
@@ -34,9 +34,9 @@ void JuceYarpAudioProcessorEditor::labelTextChanged (Label* labelThatHasChanged)
     if(&remoteInput == labelThatHasChanged)
     {
         printf("JuceYarpAudioProcessorEditor::labelTextChanged(%s)\n", labelThatHasChanged->getText().toStdString().c_str());
-        processor.robotClose();
+        //processor.robotClose();
         processor.setRobotName(labelThatHasChanged->getText().toStdString());
-        processor.robotOpen();
+        //processor.robotOpen();
     }
 }
 
