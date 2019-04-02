@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class JuceYarpAudioProcessorEditor  : public AudioProcessorEditor
+class JuceYarpAudioProcessorEditor  : public AudioProcessorEditor, public Label::Listener
 {
 public:
     JuceYarpAudioProcessorEditor (JuceYarpAudioProcessor&);
@@ -27,9 +27,14 @@ public:
     void resized() override;
 
 private:
+    void labelTextChanged (Label* labelThatHasChanged);
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     JuceYarpAudioProcessor& processor;
+
+    Label remoteInput { "Remote input", "/teoSim/rightArm"};
+    Label remoteFixedText { "Remote title", "Remote"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceYarpAudioProcessorEditor)
 };

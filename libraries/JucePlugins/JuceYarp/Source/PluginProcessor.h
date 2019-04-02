@@ -57,6 +57,11 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    void setRobotName(std::string value);
+    bool robotOpen();
+    void robotClose();
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceYarpAudioProcessor)
@@ -66,4 +71,6 @@ private:
     yarp::dev::PolyDriver device;
     yarp::dev::IPositionDirect* pos;
     yarp::dev::IControlMode* mode;
+    std::string robotName;
+    bool robotIsConnected;
 };

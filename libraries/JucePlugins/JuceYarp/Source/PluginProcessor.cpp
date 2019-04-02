@@ -24,6 +24,10 @@ JuceYarpAudioProcessor::JuceYarpAudioProcessor()
                        )
 #endif
 {
+    printf("JuceYarpAudioProcessor::JuceYarpAudioProcessor()\n");
+    robotName = "None";
+    pos = nullptr;
+    robotIsConnected = false;
 }
 
 JuceYarpAudioProcessor::~JuceYarpAudioProcessor()
@@ -97,24 +101,16 @@ void JuceYarpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    yarp::os::Property options;
-    options.put("device","remote_controlboard");
-    options.put("remote","/teoSim/leftArm");
-    options.put("local","/reaper");
-    device.open(options);
-    device.view(pos);
-    device.view(mode);
-    int axes;
-    pos->getAxes(&axes);
-    std::vector<int> modePosd(axes,yarp::os::createVocab('p','o','s','d'));
-    mode->setControlModes(modePosd.data());
+    printf("prepareToPlay(%s)\n",robotName.c_str());
+    robotOpen();
 }
 
 void JuceYarpAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
-    device.close();
+    printf("releaseResources()\n");
+    robotClose();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -162,6 +158,18 @@ void JuceYarpAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+
+    if(!robotIsConnected)
+    {
+        printf("processBlock: !robotIsConnected\n");
+        return;
+    }
+    if(!pos)
+    {
+        printf("processBlock: !pos\n");
+        return;
+    }
+
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
@@ -205,6 +213,58 @@ void JuceYarpAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+//==============================================================================
+void JuceYarpAudioProcessor::setRobotName(std::string value)
+{
+    robotName = value;
+    printf("JuceYarpAudioProcessor::setRobotName(%s)\n", robotName.c_str());
+}
+
+bool JuceYarpAudioProcessor::robotOpen()
+{
+    printf("JuceYarpAudioProcessor::robotOpen(%s)\n",robotName.c_str());
+    if ("None" == robotName)
+    {
+        printf("Pass due to: None == robotName\n");
+        return false;
+    }
+    if (robotIsConnected)
+    {
+        printf("Pass due to: robotIsConnected\n");
+        return false;
+    }
+    yarp::os::Property options;
+    options.put("device","remote_controlboard");
+    options.put("remote",robotName);
+    options.put("local","/reaper"+robotName);
+    if(!device.open(options))
+    {
+        printf("Failed to open device.\n");
+        return false;
+    }
+    device.view(pos);
+    device.view(mode);
+    int axes;
+    pos->getAxes(&axes);
+    std::vector<int> modePosd(axes,yarp::os::createVocab('p','o','s','d'));
+    mode->setControlModes(modePosd.data());
+    robotIsConnected = true;
+    return true;
+}
+
+void JuceYarpAudioProcessor::robotClose()
+{
+    printf("JuceYarpAudioProcessor::robotClose()\n");
+    if (!robotIsConnected)
+    {
+        printf("robotClose() Pass due to: !robotIsConnected\n");
+        return;
+    }
+    robotIsConnected = false;
+    pos = nullptr;
+    device.close();
 }
 
 //==============================================================================
